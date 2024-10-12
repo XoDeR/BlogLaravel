@@ -5,6 +5,12 @@
 
     <p class="mb-2">{{ $post->body }}</p>
 
+    @can('startEdit', $post)
+        <form action="{{ route('posts.startEdit', $post) }}" method="get">
+            <button type="submit" class="text-blue-500">Edit</button>
+        </form>
+    @endcan
+
     @can('delete', $post)
         <form action="{{ route('posts.destroy', $post) }}" method="post">
             @csrf

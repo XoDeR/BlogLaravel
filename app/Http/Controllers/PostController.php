@@ -34,6 +34,29 @@ class PostController extends Controller
         return back();
     }
 
+    public function startEdit(Post $post)
+    {
+        Gate::authorize('startEdit', $post);
+
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function edit(Request $request, Post $post)
+    {
+        Gate::authorize('edit', $post);
+
+        $validated = $request->validate([
+            'body' => 'required'
+        ]);
+
+        Post::find($post->id)->update([
+            'body' => $request->body
+        ]);
+        $post->refresh();
+
+        return redirect()->action([PostController::class, 'index']);
+    }
+
     public function destroy(Post $post)
     {
         Gate::authorize('delete', $post);
