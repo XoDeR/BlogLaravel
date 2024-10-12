@@ -27,4 +27,5 @@ Route::post('/register', [RegisterController::class, 'store'])->middleware('gues
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::post('/posts', [PostController::class, 'store']);
 
-Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes');
+Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('posts.likes')->middleware('auth');
+Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('posts.likes')->middleware('auth');
